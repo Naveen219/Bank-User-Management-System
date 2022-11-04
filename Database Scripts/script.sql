@@ -1,7 +1,7 @@
 CREATE DATABASE IF NOT EXISTS gbuma;
 USE gbuma;
 
-CREATE TABLE `customer_master` (
+CREATE TABLE IF NOT EXISTS`customer_master` (
   `customer_number` varchar(6) NOT NULL,
   `firstname` varchar(30) DEFAULT NULL,
   `middlename` varchar(30) DEFAULT NULL,
@@ -58,3 +58,4 @@ CREATE TABLE IF NOT EXISTS `transaction_details` (
   KEY `transaction_details_account_number_Fkey_idx` (`account_number`),
   CONSTRAINT `transaction_details_account_number_Fkey` FOREIGN KEY (`account_number`) REFERENCES `account_master` (`account_number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
