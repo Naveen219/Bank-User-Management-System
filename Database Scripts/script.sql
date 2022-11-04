@@ -1,7 +1,7 @@
 CREATE DATABASE IF NOT EXISTS gbuma;
 USE gbuma;
 
-CREATE TABLE IF NOT EXISTS `customer_master` (
+CREATE TABLE `customer_master` (
   `customer_number` varchar(6) NOT NULL,
   `firstname` varchar(30) DEFAULT NULL,
   `middlename` varchar(30) DEFAULT NULL,
@@ -10,9 +10,9 @@ CREATE TABLE IF NOT EXISTS `customer_master` (
   `customer_contact_no` varchar(10) DEFAULT NULL,
   `occupation` varchar(20) DEFAULT NULL,
   `customer_date_of_birth` date DEFAULT NULL,
+  `password` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`customer_number`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-  
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 CREATE TABLE IF NOT EXISTS `branch_master` (
   `branch_id` varchar(6) NOT NULL,
   `branch_name` varchar(30) DEFAULT NULL,
