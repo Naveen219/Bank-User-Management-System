@@ -1,7 +1,7 @@
 CREATE DATABASE IF NOT EXISTS gbuma;
 USE gbuma;
 
-CREATE TABLE IF NOT EXISTS`customer_master` (
+CREATE TABLE IF NOT EXISTS `customer_master` (
   `customer_number` varchar(6) NOT NULL,
   `firstname` varchar(30) DEFAULT NULL,
   `middlename` varchar(30) DEFAULT NULL,

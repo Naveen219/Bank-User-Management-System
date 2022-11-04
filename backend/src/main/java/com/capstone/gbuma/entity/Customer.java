@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -18,22 +19,45 @@ import javax.persistence.Table;
 @Table(name = "customer_master")
 public class Customer {
     @Id
-    @Column("customer_number")
-    private String customer_no;
+    @Column(name = "customer_number")
+    private String customerId;
 
-    @Column("password")
+    @Column(name = "password")
     private String password;
 
-    @Column("firstname")
+    @Column(name ="firstname")
     private String firstName;
 
-    @Column("middlename")
+    @Column(name = "middlename")
     private String middleName;
 
-    @Column("lastname")
+    @Column(name = "lastname")
     private String lastName;
 
-    @Column("")
-    private String 
+    @Column(name = "customer_city")
+    private String customerCity;
 
+    @Column(name = "customer_contact_no")
+    private String contactNumber;
+
+    @Column(name = "occupation")
+    private String occupation;
+
+    @Column(name = "customer_date_of_birth")
+    private Date dob;
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "customerId='" + customerId + '\'' +
+                ", password='" + password + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", middleName='" + middleName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", customerCity='" + customerCity + '\'' +
+                ", contactNumber='" + contactNumber + '\'' +
+                ", occupation='" + occupation + '\'' +
+                ", dob=" + dob +
+                '}';
+    }
 }
