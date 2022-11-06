@@ -19,12 +19,12 @@ const Login = () => {
   const [isSubmit, setIsSubmit] = useState(false);
   
   const [password, setpassword] = useState("");
-  const [userid, setuserid] = useState("");
+  const [customer_number, setcustomer_number] = useState("");
 
   
   const validateForm = (values) => {
     const error = {};
-    if (!values.userid) {
+    if (!values.customer_number) {
       error.userid = "Email is required";
     } 
     if (!values.password) {
@@ -35,19 +35,24 @@ const Login = () => {
 
   const loginHandler = (e) => {
     e.preventDefault();
-    setFormErrors(validateForm({userid,password}));
+    setFormErrors(validateForm({customer_number,password}));
     setIsSubmit(true);
   };
 
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
-      if(userid==="user" && password==="user"){
-        navigate("/menu");
-        
-      }
-      else{
-        navigate("/register");
-      }
+      axios
+        .post("http://localhost:8080/customer/login",{customer_number,password})
+        .then((res) => {
+          console.log(res.data);
+          
+          if (res.data) {
+            localStorage.setItem("customer_number",customer_number);
+            navigate("/menu", { replace: true });
+          } else {
+            navigate("/register",{replace:true});
+          }
+        });
     }
   }, [formErrors]);
   return (
@@ -56,17 +61,17 @@ const Login = () => {
       <Form onSubmit={loginHandler}>
         <FormGroup row>
           <Col lg={3}></Col>
-          <Label for="userid" sm={3} lg={2}>
+          <Label for="customer_number" sm={3} lg={2}>
             User Id
           </Label>
           <Col sm={9} lg={4}>
             <Input
-              id="userid"
-              name="userid"
+              id="customer_number"
+              name="customer_number"
               placeholder="Enter your User id"
-              value={userid}
+              value={customer_number}
               onChange={(e)=>{
-                setuserid(e.target.value);
+                setcustomer_number(e.target.value);
               }}
               type="text"
             />
@@ -105,6 +110,6 @@ const Login = () => {
       </Form>
     </Container>
   )
-}
+};
 
-export default Login
+export default Login;
