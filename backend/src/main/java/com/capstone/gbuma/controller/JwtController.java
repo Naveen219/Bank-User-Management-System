@@ -1,10 +1,16 @@
-package com.capstone.gbuma.restcontroller;
+package com.capstone.gbuma.controller;
 
+import com.capstone.gbuma.entity.JwtResponse;
+import com.capstone.gbuma.entity.LoginRequest;
 import com.capstone.gbuma.helper.JwtUtil;
 import com.capstone.gbuma.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,10 +27,10 @@ public class JwtController {
     @Autowired
     private JwtUtil jwtUtil;
     @PostMapping("/token")
-    public ResponseEntity<?> generateToken(@RequestBody User theUser) throws Exception{
+    public ResponseEntity<?> generateToken(@RequestBody LoginRequest loginRequest) throws Exception{
 
         try {
-            this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(theUser.getUserName(), theUser.getPassword()));
+            this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getCustomerId(), loginRequest.getPassword()));
 
         }
         catch(UsernameNotFoundException ex)
@@ -36,7 +42,7 @@ public class JwtController {
             e.printStackTrace();
             throw new Exception("Bad Credentials");
         }
-        UserDetails userDetails = this.customUserDetailsService.loadUserByUsername(theUser.getUserName());
+        UserDetails userDetails = this.customUserDetailsService.loadUserByUsername(loginRequest.getCustomerId());
         String token = this.jwtUtil.generateToken(userDetails);
         System.out.println("JWT: " + token);
 

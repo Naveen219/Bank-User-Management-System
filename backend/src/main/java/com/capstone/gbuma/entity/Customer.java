@@ -1,5 +1,6 @@
 package com.capstone.gbuma.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -44,6 +45,7 @@ public class Customer {
     private String occupation;
 
     @Column(name = "customer_date_of_birth")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "YYYY-MM-DD")
     private Date dob;
 
     @Override
