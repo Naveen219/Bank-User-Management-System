@@ -19,10 +19,28 @@ import {
 const Loan = () => {
   const [branch_name, setbranch_name] = useState("");
   const [loan_amount, setloan_amount] = useState(0);
+  const [formErrors, setFormErrors] = useState({});
 
   const handleLoanSubmit = (e) => {
     e.preventDefault();
+    setFormErrors(validateForm({ loan_amount, branch_name }));
     console.log(branch_name + " " + loan_amount);
+  };
+  const validateForm = (values) => {
+    const error = {};
+    if (!values.loan_amount) {
+      error.loan_amount = "loan amount is required";
+    }
+    else if(values.loan_amount>100000){
+      error.loan_amount="amount should be less than 100000";
+    }
+    else if(values.loan_amount<0){
+      error.loan_amount="Loan amount should be positive";
+    }
+    if (!values.branch_name) {
+      error.password = "Branch Name is required";
+    }
+    return error;
   };
   return (
     <Container className="p-4">
@@ -42,6 +60,7 @@ const Loan = () => {
               disabled
               type="text"
             />
+            
           </Col>
           <Col lg={3}></Col>
         </FormGroup>
@@ -66,6 +85,7 @@ const Loan = () => {
                 )
               )}
             </select>
+            <p style={{ color: "red" }}>{formErrors.branch_name}</p>
           </Col>
           <Col lg={3}></Col>
         </FormGroup>
@@ -85,6 +105,7 @@ const Loan = () => {
                 setloan_amount(e.target.value);
               }}
             />
+            <p style={{ color: "red" }}>{formErrors.loan_amount}</p>
           </Col>
           <Col lg={3}></Col>
         </FormGroup>
