@@ -57,7 +57,15 @@ const Register = () => {
       axios
         .post("http://localhost:8080/customer/register", user)
         .then((res) => {
-          console.log(res.data);
+          if(res.data){
+            console.log(res.data);
+            navigate("/login", { replace: true });
+            
+          }
+          else{
+            alert("User already registered Please login");
+          }
+          
         });
     } catch (err) {}
   };
@@ -74,7 +82,7 @@ const Register = () => {
 
           if (res.data) {
             registerApiCall(user);
-            navigate("/login", { replace: true });
+            
           } else {
             alert("Account Not Exist");
           }

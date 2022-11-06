@@ -13,7 +13,7 @@ import {
   Dropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem
+  DropdownItem,
 } from "reactstrap";
 
 const Loan = () => {
@@ -52,13 +52,20 @@ const Loan = () => {
           </Label>
 
           <Col sm={9} lg={4}>
-          <select id="branch_name" onChange={(e)=>setbranch_name(e.target.value)} style={{width:"100%",padding:"7px",borderRadius:"5px"}}>
-                    <option value="select branch">select branch</option>
-                    <option value="hyd" >hyd</option>
-                    <option value="chn">chn</option>
-                    <option value="blr">blr</option>
-
-              </select>
+            <select
+              id="branch_name"
+              onChange={(e) => setbranch_name(e.target.value)}
+              style={{ width: "100%", padding: "7px", borderRadius: "5px" }}
+            >
+              <option value="select branch">select branch</option>
+              {JSON.parse(localStorage.getItem("branch_names")).map(
+                (branch_name) => (
+                  <option value={branch_name.branch_id}>
+                    {branch_name.branch_name}
+                  </option>
+                )
+              )}
+            </select>
           </Col>
           <Col lg={3}></Col>
         </FormGroup>

@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react'
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
@@ -13,20 +13,18 @@ import {
 } from "reactstrap";
 
 const Login = () => {
-    
   const navigate = useNavigate();
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
-  
+  const [returned, setreturned] = useState([]);
   const [password, setpassword] = useState("");
   const [customer_number, setcustomer_number] = useState("");
 
-  
   const validateForm = (values) => {
     const error = {};
     if (!values.customer_number) {
       error.userid = "Email is required";
-    } 
+    }
     if (!values.password) {
       error.password = "Password is required";
     }
@@ -35,22 +33,38 @@ const Login = () => {
 
   const loginHandler = (e) => {
     e.preventDefault();
-    setFormErrors(validateForm({customer_number,password}));
+    setFormErrors(validateForm({ customer_number, password }));
     setIsSubmit(true);
   };
-
+  const getBranchListOnLogin = async (customer_number) => {
+    try {
+      axios
+        .get("http://localhost:8080/customer/getBranches", {
+          params: { customer_number: customer_number },
+        })
+        .then((res) => {
+          // setreturned(res.data);
+          console.log(res.data);
+          localStorage.setItem("branch_names",JSON.stringify(res.data));
+          navigate("/menu", { replace: true });
+        });
+    } catch (err) {}
+  };
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       axios
-        .post("http://localhost:8080/customer/login",{customer_number,password})
+        .post("http://localhost:8080/customer/login", {
+          customer_number,
+          password,
+        })
         .then((res) => {
           console.log(res.data);
-          
           if (res.data) {
-            localStorage.setItem("customer_number",customer_number);
-            navigate("/menu", { replace: true });
+            localStorage.setItem("customer_number", customer_number);
+            getBranchListOnLogin(customer_number);
+            
           } else {
-            navigate("/register",{replace:true});
+            navigate("/register", { replace: true });
           }
         });
     }
@@ -70,7 +84,7 @@ const Login = () => {
               name="customer_number"
               placeholder="Enter your User id"
               value={customer_number}
-              onChange={(e)=>{
+              onChange={(e) => {
                 setcustomer_number(e.target.value);
               }}
               type="text"
@@ -92,9 +106,8 @@ const Login = () => {
               name="password"
               placeholder="Enter Password"
               value={password}
-              onChange={(e)=>{
+              onChange={(e) => {
                 setpassword(e.target.value);
-
               }}
               type="password"
             />
@@ -109,7 +122,7 @@ const Login = () => {
         </FormGroup>
       </Form>
     </Container>
-  )
+  );
 };
 
 export default Login;
