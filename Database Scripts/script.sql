@@ -59,3 +59,20 @@ CREATE TABLE IF NOT EXISTS `transaction_details` (
   CONSTRAINT `transaction_details_account_number_Fkey` FOREIGN KEY (`account_number`) REFERENCES `account_master` (`account_number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+
+
+
+
+
+
+
+/*
+Inserting data into the branch table
+ */
+ 
+ 
+INSERT INTO `gbuma`.`branch_master` (`branch_id`, `branch_name`, `branch_city`) VALUES ('b001', 'Asif Ali Road', 'Delhi');
+INSERT INTO `gbuma`.`branch_master` (`branch_id`, `branch_name`, `branch_city`) VALUES ('b002', 'Delhi Contt', 'Delhi');
+INSERT INTO `gbuma`.`branch_master` (`branch_id`, `branch_name`, `branch_city`) VALUES ('b003', 'Jadacapur', 'Kolkata');
+INSERT INTO `gbuma`.`branch_master` (`branch_id`, `branch_name`, `branch_city`) VALUES ('b004', 'Mandvi', 'Mumbai');
+INSERT INTO `gbuma`.`branch_master` (`branch_id`, `branch_name`, `branch_city`) VALUES ('b005', 'Mahe', 'Mumbai');
