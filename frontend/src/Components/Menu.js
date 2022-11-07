@@ -1,17 +1,60 @@
 import React from "react";
 import { Container, Button } from "reactstrap";
+import { useNavigate,useLocation } from "react-router-dom";
+import axios from "axios";
 
 const Menu = () => {
+  const navigate = useNavigate();
+  const handleLoan = () => {
+    axios
+    .get("http://localhost:8080/api/customer/accountExist",{
+             params: { customer_number: localStorage.getItem("customer_number") },headers: {
+              'Authorization': "Bearer " + localStorage.getItem("token")
+            }
+           })
+    .then((res)=>{
+      if(res.data){
+        navigate("/loan");
+      }
+      else{
+        alert("Account not exist");
+      }
+    })
+  
+  };
+  const { state } = useLocation();
+  const branch_names = state;
   return (
-    <Container>
-      <Button color="primary" size="md" className="m-5">
-        Apply for Loan
+    
+    <Container
+      className="p-5"
+      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
+      {/* {console.log(JSON.parse(localStorage.getItem("branch_names")))} */}
+      <Button
+        color="warning"
+        size="md"
+        className="m-3"
+        onClick={handleLoan}
+        style={{ width: "500px" }}
+      >
+        <b>Apply for Loan</b>
       </Button>
-      <Button color="secondary" size="md" className="m-5">
-        Transactions
+      <Button
+        color="warning"
+        size="md"
+        className="m-3"
+        style={{ width: "500px" }}
+      >
+        <b>Transactions</b>
       </Button>
-      <Button color="warning" size="md" className="m-5">
-        View Statement
+      <Button
+        color="warning"
+        size="md"
+        className="m-3"
+        style={{ width: "500px" }}
+      >
+        <b>View Statement</b>
       </Button>
     </Container>
   );

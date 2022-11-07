@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react'
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
@@ -13,41 +13,63 @@ import {
 } from "reactstrap";
 
 const Login = () => {
-    
   const navigate = useNavigate();
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
-  
+  const [returned, setreturned] = useState([]);
   const [password, setpassword] = useState("");
-  const [userid, setuserid] = useState("");
+  const [customer_number, setcustomer_number] = useState("");
 
-  
   const validateForm = (values) => {
-    const error = {};
-    if (!values.userid) {
-      error.userid = "Email is required";
-    } 
-    if (!values.password) {
-      error.password = "Password is required";
+    const ferror = {};
+    if (!values.customer_number) {
+      ferror.userid = "Email is required";
     }
-    return error;
+    if (!values.password) {
+      ferror.password = "Password is required";
+    }
+    return ferror;
   };
 
   const loginHandler = (e) => {
     e.preventDefault();
-    setFormErrors(validateForm({userid,password}));
+    setFormErrors(validateForm({ customer_number, password }));
     setIsSubmit(true);
   };
-
+  const getBranchListOnLogin = async (customer_number) => {
+    try {
+      console.log(localStorage.getItem("token"));
+      axios
+        .get("http://localhost:8080/api/branch/getBranches", {
+          params: { customer_number: customer_number },headers: {
+            'Authorization': "Bearer " + localStorage.getItem("token")
+          }
+        })
+        .then((res) => {
+          // setreturned(res.data);
+          console.log(res.data);
+          localStorage.setItem("branch_names", JSON.stringify(res.data));
+          navigate("/menu", { replace: true });
+        });
+    } catch (err) {}
+  };
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
-      if(userid==="user" && password==="user"){
-        navigate("/menu");
-        
-      }
-      else{
-        navigate("/register");
-      }
+      axios
+        .post("http://localhost:8080/token", {
+          customer_number,
+          password,
+        })
+        .then((res) => {
+          console.log(res.data.token);
+          if (res.data) {
+            localStorage.setItem("token",res.data.token);
+            localStorage.setItem("customer_number", customer_number);
+            getBranchListOnLogin(customer_number);
+          } else {
+            navigate("/register", { replace: true });
+          }
+        });
     }
   }, [formErrors]);
   return (
@@ -56,17 +78,17 @@ const Login = () => {
       <Form onSubmit={loginHandler}>
         <FormGroup row>
           <Col lg={3}></Col>
-          <Label for="userid" sm={3} lg={2}>
+          <Label for="customer_number" sm={3} lg={2}>
             User Id
           </Label>
           <Col sm={9} lg={4}>
             <Input
-              id="userid"
-              name="userid"
+              id="customer_number"
+              name="customer_number"
               placeholder="Enter your User id"
-              value={userid}
-              onChange={(e)=>{
-                setuserid(e.target.value);
+              value={customer_number}
+              onChange={(e) => {
+                setcustomer_number(e.target.value);
               }}
               type="text"
             />
@@ -87,9 +109,8 @@ const Login = () => {
               name="password"
               placeholder="Enter Password"
               value={password}
-              onChange={(e)=>{
+              onChange={(e) => {
                 setpassword(e.target.value);
-
               }}
               type="password"
             />
@@ -104,7 +125,7 @@ const Login = () => {
         </FormGroup>
       </Form>
     </Container>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
