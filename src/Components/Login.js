@@ -21,14 +21,14 @@ const Login = () => {
   const [customer_number, setcustomer_number] = useState("");
 
   const validateForm = (values) => {
-    const error = {};
+    const ferror = {};
     if (!values.customer_number) {
-      error.userid = "Email is required";
+      ferror.userid = "Email is required";
     }
     if (!values.password) {
-      error.password = "Password is required";
+      ferror.password = "Password is required";
     }
-    return error;
+    return ferror;
   };
 
   const loginHandler = (e) => {
@@ -38,14 +38,17 @@ const Login = () => {
   };
   const getBranchListOnLogin = async (customer_number) => {
     try {
+      console.log(localStorage.getItem("token"));
       axios
-        .get("http://localhost:8080/customer/getBranches", {
-          params: { customer_number: customer_number },
+        .get("http://localhost:8080/api/branch/getBranches", {
+          params: { customer_number: customer_number },headers: {
+            'Authorization': "Bearer " + localStorage.getItem("token")
+          }
         })
         .then((res) => {
           // setreturned(res.data);
           console.log(res.data);
-          localStorage.setItem("branch_names",JSON.stringify(res.data));
+          localStorage.setItem("branch_names", JSON.stringify(res.data));
           navigate("/menu", { replace: true });
         });
     } catch (err) {}
@@ -53,16 +56,16 @@ const Login = () => {
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       axios
-        .post("http://localhost:8080/customer/login", {
+        .post("http://localhost:8080/token", {
           customer_number,
           password,
         })
         .then((res) => {
-          console.log(res.data);
+          console.log(res.data.token);
           if (res.data) {
+            localStorage.setItem("token",res.data.token);
             localStorage.setItem("customer_number", customer_number);
             getBranchListOnLogin(customer_number);
-            
           } else {
             navigate("/register", { replace: true });
           }

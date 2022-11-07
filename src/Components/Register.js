@@ -52,43 +52,57 @@ const Register = () => {
     console.log(user);
   };
 
-  const registerApiCall = async (user) => {
-    try {
+  // const registerApiCall = async (user) => {
+  //   try {
+  //     axios
+  //       .post("http://localhost:8080/customer/register", user)
+  //       .then((res) => {
+  //         if(res.data){
+  //           console.log(res.data);
+  //           navigate("/login", { replace: true });
+
+  //         }
+  //         else{
+  //           alert("User already registered Please login");
+  //         }
+
+  //       });
+  //   } catch (err) {}
+  // };
+
+  // useEffect(() => {
+  //   // console.log(user);
+  //   if (Object.keys(formerrors).length === 0 && isSubmit) {
+  //     axios
+  //       .get("http://localhost:8080/customer/accountExist", {
+  //         params: { customer_number: user.customer_number },
+  //       })
+  //       .then((res) => {
+  //         console.log(res.data);
+
+  //         if (res.data) {
+  //           registerApiCall(user);
+
+  //         } else {
+  //           alert("Account Not Exist");
+  //         }
+  //       });
+  //   }
+  // }, [formerrors]);
+  useEffect(() => {
+    if (Object.keys(formerrors).length === 0 && isSubmit) {
       axios
         .post("http://localhost:8080/customer/register", user)
         .then((res) => {
-          if(res.data){
-            console.log(res.data);
-            navigate("/login", { replace: true });
-            
-          }
-          else{
-            alert("User already registered Please login");
-          }
-          
-        });
-    } catch (err) {}
-  };
-
-  useEffect(() => {
-    // console.log(user);
-    if (Object.keys(formerrors).length === 0 && isSubmit) {
-      axios
-        .get("http://localhost:8080/customer/accountExist", {
-          params: { customer_number: user.customer_number },
-        })
-        .then((res) => {
           console.log(res.data);
-
           if (res.data) {
-            registerApiCall(user);
-            
+            navigate("/login", { replace: true });
           } else {
-            alert("Account Not Exist");
+            alert("User already registered Please login");
           }
         });
     }
-  }, [formerrors]);
+  });
   const validate = (user) => {
     const errors = {};
     if (!user.customer_number) {
@@ -100,9 +114,9 @@ const Register = () => {
     if (!user.firstname) {
       errors.firstname = "First name is required";
     }
-    if (!user.middlename) {
-      errors.middlename = "Middle name is required";
-    }
+    // if (!user.middlename) {
+    //   errors.middlename = "Middle name is required";
+    // }
     if (!user.lastname) {
       errors.lastname = "Last name is required";
     }

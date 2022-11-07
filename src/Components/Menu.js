@@ -1,11 +1,26 @@
 import React from "react";
 import { Container, Button } from "reactstrap";
 import { useNavigate,useLocation } from "react-router-dom";
+import axios from "axios";
 
 const Menu = () => {
   const navigate = useNavigate();
   const handleLoan = () => {
-    navigate("/loan");
+    axios
+    .get("http://localhost:8080/api/customer/accountExist",{
+             params: { customer_number: localStorage.getItem("customer_number") },headers: {
+              'Authorization': "Bearer " + localStorage.getItem("token")
+            }
+           })
+    .then((res)=>{
+      if(res.data){
+        navigate("/loan");
+      }
+      else{
+        alert("Account not exist");
+      }
+    })
+  
   };
   const { state } = useLocation();
   const branch_names = state;

@@ -30,12 +30,10 @@ const Loan = () => {
     const error = {};
     if (!values.loan_amount) {
       error.loan_amount = "loan amount is required";
-    }
-    else if(values.loan_amount>100000){
-      error.loan_amount="amount should be less than 100000";
-    }
-    else if(values.loan_amount<0){
-      error.loan_amount="Loan amount should be positive";
+    } else if (values.loan_amount > 100000) {
+      error.loan_amount = "amount should be less than 100000";
+    } else if (values.loan_amount < 0) {
+      error.loan_amount = "Loan amount should be positive";
     }
     if (!values.branch_name) {
       error.password = "Branch Name is required";
@@ -60,7 +58,6 @@ const Loan = () => {
               disabled
               type="text"
             />
-            
           </Col>
           <Col lg={3}></Col>
         </FormGroup>
@@ -77,10 +74,11 @@ const Loan = () => {
               style={{ width: "100%", padding: "7px", borderRadius: "5px" }}
             >
               <option value="select branch">select branch</option>
+              {console.log(JSON.parse(localStorage.getItem("branch_names")))}
               {JSON.parse(localStorage.getItem("branch_names")).map(
                 (branch_name) => (
-                  <option value={branch_name.branch_id}>
-                    {branch_name.branch_name}
+                  <option value={branch_name.branchId}>
+                    {branch_name.branchName}
                   </option>
                 )
               )}
