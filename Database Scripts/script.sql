@@ -12,7 +12,8 @@ CREATE TABLE IF NOT EXISTS `customer_master` (
   `customer_date_of_birth` date DEFAULT NULL,
   `password` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`customer_number`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 CREATE TABLE IF NOT EXISTS `branch_master` (
   `branch_id` varchar(6) NOT NULL,
   `branch_name` varchar(30) DEFAULT NULL,
