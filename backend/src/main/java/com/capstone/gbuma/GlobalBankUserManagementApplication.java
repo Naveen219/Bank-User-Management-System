@@ -12,7 +12,4 @@ public class GlobalBankUserManagementApplication {
         SpringApplication.run(GlobalBankUserManagementApplication.class, args);
     }
 
-    public static interface CustomerRepo extends JpaRepository<Customer,
-            String> {
-    }
 }

@@ -15,4 +15,7 @@ public class BranchServiceImpl implements BranchService {
     public List<Branch> getAllBranches() {
         return branchRepo.findAll();
     }
+    public Branch getBranchById(String branchId) {
+        return branchRepo.findByBranchId(branchId);
+    }
 }

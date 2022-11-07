@@ -5,10 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "branch_master")
@@ -24,5 +22,8 @@ public class Branch {
     private String branchName;
     @Column(name = "branch_city")
     private String branchCity;
+
+    @OneToMany(mappedBy = "branch")
+    private List<Account> accountList;
 }
 

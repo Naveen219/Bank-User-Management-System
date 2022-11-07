@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BranchRepo extends JpaRepository<Branch, String> {
+    public Branch findByBranchId(String branchId);
 }
