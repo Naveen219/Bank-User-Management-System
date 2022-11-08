@@ -11,6 +11,6 @@ public interface CustomerService {
 	boolean isValid(Customer customer);
 
 
-	public Optional<Customer> getCustomerById(String customerId);
+	public Optional<Customer> getCustomerById(String customer_number);
 
 }

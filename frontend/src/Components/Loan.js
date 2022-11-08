@@ -17,15 +17,41 @@ import {
 } from "reactstrap";
 
 const Loan = () => {
-  const [branch_name, setbranch_name] = useState("");
+  const [branch_id, setbranch_id] = useState("");
   const [loan_amount, setloan_amount] = useState(0);
   const [formErrors, setFormErrors] = useState({});
+  const [isSubmit, setisSubmit] = useState(false)
 
   const handleLoanSubmit = (e) => {
     e.preventDefault();
-    setFormErrors(validateForm({ loan_amount, branch_name }));
-    console.log(branch_name + " " + loan_amount);
+    setFormErrors(validateForm({ loan_amount, branch_id }));
+    setisSubmit(true);
+    // console.log(branch_name + " " + loan_amount);
   };
+  useEffect(() => {
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      axios
+        .post("http://localhost:8080/api/loan/addloan",{
+          myKey:{
+            branch_id:branch_id,
+            customer_number:localStorage.getItem("customer_number")
+          }
+          ,
+          loan_amount:loan_amount
+        },{headers: {
+          'Authorization': "Bearer " + localStorage.getItem("token")
+        }
+      })
+        .then((res) => {
+          console.log(res.data);
+          if (res.data) {
+            // navigate("/login", { replace: true });
+          } else {
+            // alert("User already registered Please login");
+          }
+        });
+    }
+  });
   const validateForm = (values) => {
     const error = {};
     if (!values.loan_amount) {
@@ -35,7 +61,7 @@ const Loan = () => {
     } else if (values.loan_amount < 0) {
       error.loan_amount = "Loan amount should be positive";
     }
-    if (!values.branch_name) {
+    if (!values.branch_id) {
       error.password = "Branch Name is required";
     }
     return error;
@@ -63,14 +89,14 @@ const Loan = () => {
         </FormGroup>
         <FormGroup row>
           <Col lg={3}></Col>
-          <Label for="branch_name" sm={3} lg={2}>
+          <Label for="branch_id" sm={3} lg={2}>
             Select Branch
           </Label>
 
           <Col sm={9} lg={4}>
             <select
-              id="branch_name"
-              onChange={(e) => setbranch_name(e.target.value)}
+              id="branch_id"
+              onChange={(e) => setbranch_id(e.target.value)}
               style={{ width: "100%", padding: "7px", borderRadius: "5px" }}
             >
               <option value="select branch">select branch</option>
@@ -83,7 +109,7 @@ const Loan = () => {
                 )
               )}
             </select>
-            <p style={{ color: "red" }}>{formErrors.branch_name}</p>
+            <p style={{ color: "red" }}>{formErrors.branch_id}</p>
           </Col>
           <Col lg={3}></Col>
         </FormGroup>

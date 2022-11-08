@@ -92,12 +92,13 @@ const Register = () => {
   useEffect(() => {
     if (Object.keys(formerrors).length === 0 && isSubmit) {
       axios
-        .post("http://localhost:8080/customer/register", user)
+        .post("http://localhost:8080/api/customer/register",user)
         .then((res) => {
           console.log(res.data);
           if (res.data) {
             navigate("/login", { replace: true });
           } else {
+            setisSubmit(false)
             alert("User already registered Please login");
           }
         });

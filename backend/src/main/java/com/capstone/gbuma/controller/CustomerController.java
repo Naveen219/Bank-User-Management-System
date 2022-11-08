@@ -27,7 +27,7 @@ public class CustomerController {
 	@PostMapping("/register")
 	public ResponseEntity<Customer> register(@RequestBody Customer customer) {
 		System.out.println(customer);
-		if (customerService.isExist(customer.getCustomerId())) {
+		if (customerService.isExist(customer.getCustomer_number())) {
 			System.out.println("Exist" + customer);
 			return null;
 		} else {

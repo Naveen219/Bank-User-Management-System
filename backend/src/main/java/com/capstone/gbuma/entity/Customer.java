@@ -27,33 +27,33 @@ public class Customer {
     private String password;
 
     @Column(name ="firstname")
-    private String firstName;
+    private String firstname;
 
     @Column(name = "middlename")
-    private String middleName;
+    private String middlename;
 
     @Column(name = "lastname")
-    private String lastName;
+    private String lastname;
 
     @Column(name = "customer_city")
-    private String customerCity;
+    private String customer_city;
 
     @Column(name = "customer_contact_no")
-    private String contactNumber;
+    private String customer_contact_no;
 
     @Column(name = "occupation")
     private String occupation;
 
     @Column(name = "customer_date_of_birth")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "YYYY-MM-DD")
-    private Date dob;
+    private Date customer_date_of_birth;
 
-    public String getCustomerId() {
+	public String getCustomer_number() {
 		return customer_number;
 	}
 
-	public void setCustomerId(String customerId) {
-		this.customer_number = customerId;
+	public void setCustomer_number(String customer_number) {
+		this.customer_number = customer_number;
 	}
 
 	public String getPassword() {
@@ -64,44 +64,44 @@ public class Customer {
 		this.password = password;
 	}
 
-	public String getFirstName() {
-		return firstName;
+	public String getFirstname() {
+		return firstname;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
 	}
 
-	public String getMiddleName() {
-		return middleName;
+	public String getMiddlename() {
+		return middlename;
 	}
 
-	public void setMiddleName(String middleName) {
-		this.middleName = middleName;
+	public void setMiddlename(String middlename) {
+		this.middlename = middlename;
 	}
 
-	public String getLastName() {
-		return lastName;
+	public String getLastname() {
+		return lastname;
 	}
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
 	}
 
-	public String getCustomerCity() {
-		return customerCity;
+	public String getCustomer_city() {
+		return customer_city;
 	}
 
-	public void setCustomerCity(String customerCity) {
-		this.customerCity = customerCity;
+	public void setCustomer_city(String customer_city) {
+		this.customer_city = customer_city;
 	}
 
-	public String getContactNumber() {
-		return contactNumber;
+	public String getCustomer_contact_no() {
+		return customer_contact_no;
 	}
 
-	public void setContactNumber(String contactNumber) {
-		this.contactNumber = contactNumber;
+	public void setCustomer_contact_no(String customer_contact_no) {
+		this.customer_contact_no = customer_contact_no;
 	}
 
 	public String getOccupation() {
@@ -112,26 +112,26 @@ public class Customer {
 		this.occupation = occupation;
 	}
 
-	public Date getDob() {
-		return dob;
+	public Date getCustomer_date_of_birth() {
+		return customer_date_of_birth;
 	}
 
-	public void setDob(Date dob) {
-		this.dob = dob;
+	public void setCustomer_date_of_birth(Date customer_date_of_birth) {
+		this.customer_date_of_birth = customer_date_of_birth;
 	}
 
-	public Customer(String customerId, String password, String firstName, String middleName, String lastName,
-			String customerCity, String contactNumber, String occupation, Date dob) {
+	public Customer(String customer_number, String password, String firstname, String middlename, String lastname,
+			String customer_city, String customer_contact_no, String occupation, Date customer_date_of_birth) {
 		super();
-		this.customer_number = customerId;
+		this.customer_number = customer_number;
 		this.password = password;
-		this.firstName = firstName;
-		this.middleName = middleName;
-		this.lastName = lastName;
-		this.customerCity = customerCity;
-		this.contactNumber = contactNumber;
+		this.firstname = firstname;
+		this.middlename = middlename;
+		this.lastname = lastname;
+		this.customer_city = customer_city;
+		this.customer_contact_no = customer_contact_no;
 		this.occupation = occupation;
-		this.dob = dob;
+		this.customer_date_of_birth = customer_date_of_birth;
 	}
 
 	public Customer() {
@@ -140,17 +140,11 @@ public class Customer {
 	}
 
 	@Override
-    public String toString() {
-        return "Customer{" +
-                "customerId='" + customer_number + '\'' +
-                ", password='" + password + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", middleName='" + middleName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", customerCity='" + customerCity + '\'' +
-                ", contactNumber='" + contactNumber + '\'' +
-                ", occupation='" + occupation + '\'' +
-                ", dob=" + dob +
-                '}';
-    }
+	public String toString() {
+		return "Customer [customer_number=" + customer_number + ", password=" + password + ", firstname=" + firstname
+				+ ", middlename=" + middlename + ", lastname=" + lastname + ", customer_city=" + customer_city
+				+ ", customer_contact_no=" + customer_contact_no + ", occupation=" + occupation
+				+ ", customer_date_of_birth=" + customer_date_of_birth + "]";
+	}
+
 }

@@ -17,10 +17,10 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     private CustomerService customerService;
     @Override
-    public UserDetails loadUserByUsername(String customerId) throws UsernameNotFoundException {
-        Optional<Customer> userOptional =  customerService.getCustomerById(customerId.trim());
-        if (userOptional.isPresent() && userOptional.get().getCustomerId().equals(customerId)) {
-            return new User(userOptional.get().getCustomerId(),userOptional.get().getPassword(), new ArrayList<>());
+    public UserDetails loadUserByUsername(String customer_number) throws UsernameNotFoundException {
+        Optional<Customer> userOptional =  customerService.getCustomerById(customer_number.trim());
+        if (userOptional.isPresent() && userOptional.get().getCustomer_number().equals(customer_number)) {
+            return new User(userOptional.get().getCustomer_number(),userOptional.get().getPassword(), new ArrayList<>());
         }
         else {
             throw new UsernameNotFoundException("User not found");
