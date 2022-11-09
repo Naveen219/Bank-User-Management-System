@@ -103,7 +103,7 @@ const Register = () => {
           }
         });
     }
-  });
+  }, [formerrors]);
   const validate = (user) => {
     const errors = {};
     if (!user.customer_number) {

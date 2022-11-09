@@ -5,9 +5,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -42,5 +45,7 @@ public class Branch {
 	public void setBranchCity(String branchCity) {
 		this.branchCity = branchCity;
 	}
+	@OneToMany(mappedBy = "branch")
+    private List<Account> accountList;
 }
 

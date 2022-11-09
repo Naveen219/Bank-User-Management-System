@@ -20,7 +20,7 @@ const Loan = () => {
   const [branch_id, setbranch_id] = useState("");
   const [loan_amount, setloan_amount] = useState(0);
   const [formErrors, setFormErrors] = useState({});
-  const [isSubmit, setisSubmit] = useState(false)
+  const [isSubmit, setisSubmit] = useState(false);
 
   const handleLoanSubmit = (e) => {
     e.preventDefault();
@@ -29,22 +29,28 @@ const Loan = () => {
     // console.log(branch_name + " " + loan_amount);
   };
   useEffect(() => {
+    
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       axios
-        .post("http://localhost:8080/api/loan/addloan",{
-          myKey:{
-            branch_id:branch_id,
-            customer_number:localStorage.getItem("customer_number")
+        .post(
+          "http://localhost:8080/api/loan/addloan",
+          {
+            myKey: {
+              branch_id: branch_id,
+              customer_number: localStorage.getItem("customer_number"),
+            },
+            loan_amount: loan_amount,
+          },
+          {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
           }
-          ,
-          loan_amount:loan_amount
-        },{headers: {
-          'Authorization': "Bearer " + localStorage.getItem("token")
-        }
-      })
+        )
         .then((res) => {
           console.log(res.data);
           if (res.data) {
+            alert("success");
             // navigate("/login", { replace: true });
           } else {
             // alert("User already registered Please login");
@@ -66,8 +72,16 @@ const Loan = () => {
     }
     return error;
   };
+  if (localStorage.getItem("branch_names").length === 2) {
+    alert("account does not exist");
+    return (<><h2>Should have account to apply for loan</h2></>)
+  }
+
+  else{
   return (
     <Container className="p-4">
+      
+
       <h2 className="text-center py-3">Apply for Loan</h2>
       <Form onSubmit={handleLoanSubmit}>
         <FormGroup row>
@@ -140,7 +154,7 @@ const Loan = () => {
         </FormGroup>
       </Form>
     </Container>
-  );
+  );}
 };
 
 export default Loan;

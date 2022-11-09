@@ -39,7 +39,7 @@ const Login = () => {
   const getBranchListOnLogin = async (customer_number) => {
     try {
       console.log(localStorage.getItem("token"));
-      axios
+      await axios
         .get("http://localhost:8080/api/branch/getBranches", {
           params: { customer_number: customer_number },headers: {
             'Authorization': "Bearer " + localStorage.getItem("token")
@@ -55,7 +55,7 @@ const Login = () => {
   };
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
-      axios
+       axios
         .post("http://localhost:8080/token", {
           customer_number,
           password,
